@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
         />
       </Link>
       {/* desktop nav */}
-      <ul className="hidden gap-5 text-sm text-gray-700 sm:flex">
+      <ul className="hidden items-center gap-5 text-sm text-gray-700 sm:flex">
         {navlinks.map((item) => (
           <NavLink
             key={item.id}
@@ -106,4 +106,5 @@ const Navbar: React.FC = () => {
     </nav>
   );
 };
+
 export default Navbar;

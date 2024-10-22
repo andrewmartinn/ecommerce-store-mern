@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 
 const App: React.FC = () => {
   return (
-    <main className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+    <main className="font-outfit px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -28,4 +28,5 @@ const App: React.FC = () => {
     </main>
   );
 };
+
 export default App;
