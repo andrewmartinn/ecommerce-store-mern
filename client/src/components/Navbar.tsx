@@ -77,9 +77,7 @@ const Navbar: React.FC = () => {
       </div>
       {/* sidebar menu */}
       <div
-        className={`absolute right-0 top-0 h-full transform bg-white shadow-md transition-transform duration-300 ease-in-out ${
-          isSidebarActive ? "translate-x-0" : "translate-x-full"
-        } w-3/4`}
+        className={`absolute bottom-0 right-0 top-0 overflow-hidden bg-white shadow-md transition-all ${isSidebarActive ? "w-3/4" : "w-0"}`}
       >
         <div className="flex flex-col text-gray-600">
           <div
@@ -108,3 +106,33 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
+{
+  /* <div
+        className={`absolute right-0 top-0 h-full transform bg-white shadow-md transition-transform duration-300 ease-in-out ${
+          isSidebarActive ? "translate-x-0" : "translate-x-full"
+        } w-3/4`}
+      >
+        <div className="flex flex-col text-gray-600">
+          <div
+            className="flex cursor-pointer items-center gap-4 p-3"
+            onClick={() => setIsSidebarActive(false)}
+          >
+            <img src={assets.dropdown_icon} alt="" className="h-4 rotate-180" />
+            <p className="text-gray-500 hover:text-black">Back</p>
+          </div>
+          <div className="flex flex-col divide-y-2 divide-slate-400/[.24]">
+            {navlinks.map((item) => (
+              <NavLink
+                key={item.id}
+                to={item.url}
+                onClick={() => setIsSidebarActive(false)}
+                className="py-2 pl-6 uppercase"
+              >
+                {item.name}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </div> */
+}

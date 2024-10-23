@@ -9,10 +9,11 @@ import Login from "./pages/Login";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   return (
-    <main className="font-outfit px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+    <main className="px-4 font-outfit sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,6 +26,7 @@ const App: React.FC = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={<Orders />} />
       </Routes>
+      <Footer />
     </main>
   );
 };
