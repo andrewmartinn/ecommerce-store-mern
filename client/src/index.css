@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.product-preview-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 a.active hr {
   display: block;
 }
