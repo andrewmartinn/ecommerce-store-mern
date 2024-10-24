@@ -1,11 +1,13 @@
 interface SectionHeaderProps {
   primaryTitle: string;
   accentTitle: string;
+  isCollectionsPage?: boolean;
 }
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({
   primaryTitle,
   accentTitle,
+  isCollectionsPage = false,
 }) => {
   return (
     <div className="mb-3 inline-flex items-center gap-2">
@@ -15,7 +17,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
           {accentTitle}
         </span>
       </p>
-      <div className="h-[2px] w-8 bg-gray-700 sm:w-12" />
+      <div
+        className={`h-[2px] w-8 bg-gray-700 sm:w-12 ${isCollectionsPage ? "hidden sm:block" : ""}`}
+      />
     </div>
   );
 };
