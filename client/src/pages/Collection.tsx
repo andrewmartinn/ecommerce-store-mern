@@ -6,7 +6,7 @@ import { IProduct } from "../types";
 import useShopContext from "../hooks/useShopContext";
 
 const Collection: React.FC = () => {
-  const { products } = useShopContext();
+  const { products, searchTerm, showSearchBar } = useShopContext();
 
   const [showFilter, setShowFilter] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
@@ -64,6 +64,13 @@ const Collection: React.FC = () => {
 
   const applyFilter = useCallback(() => {
     let allProducts = products.slice();
+
+    if (searchTerm && showSearchBar) {
+      allProducts = allProducts.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+    }
+
     if (category.length > 0) {
       allProducts = allProducts.filter((item) =>
         category.includes(item.category),
@@ -78,7 +85,14 @@ const Collection: React.FC = () => {
 
     setFilteredProducts(allProducts);
     sortProducts(allProducts);
-  }, [category, subCategory, products, sortProducts]);
+  }, [
+    category,
+    subCategory,
+    products,
+    sortProducts,
+    searchTerm,
+    showSearchBar,
+  ]);
 
   useEffect(() => {
     applyFilter();
@@ -189,11 +203,19 @@ const Collection: React.FC = () => {
           </select>
         </div>
         {/* products grid */}
-        <div className="grid grid-cols-2 gap-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {filteredProducts.map((item) => (
-            <ProductItem key={item._id} product={item} />
-          ))}
-        </div>
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            {filteredProducts.map((item) => (
+              <ProductItem key={item._id} product={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="min-h-[50dvh]">
+            <p className="my-32 text-center text-2xl font-medium">
+              No Results Found.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

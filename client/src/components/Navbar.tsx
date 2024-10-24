@@ -1,6 +1,7 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { assets } from "../assets/ui-assets/data";
 import { useState } from "react";
+import useShopContext from "../hooks/useShopContext";
 
 interface NavLink {
   id: number;
@@ -16,6 +17,8 @@ const navlinks: NavLink[] = [
 ];
 
 const Navbar: React.FC = () => {
+  const location = useLocation();
+  const { setShowSearchBar } = useShopContext();
   const [isSidebarActive, setIsSidebarActive] = useState(false);
 
   return (
@@ -43,11 +46,14 @@ const Navbar: React.FC = () => {
       </ul>
       {/* nav actions */}
       <div className="flex items-center gap-6">
-        <img
-          src={assets.search_icon}
-          alt="product search icon"
-          className="w-5 cursor-pointer"
-        />
+        {location.pathname === "/collection" && (
+          <img
+            src={assets.search_icon}
+            alt="product search icon"
+            className="w-5 cursor-pointer"
+            onClick={() => setShowSearchBar(true)}
+          />
+        )}
         <div className="group relative">
           <img
             src={assets.profile_icon}

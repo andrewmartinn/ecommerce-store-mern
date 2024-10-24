@@ -19,4 +19,8 @@ export interface ShopContextType {
   currency: string;
   deliveryFee: number;
   products: IProduct[];
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  showSearchBar: boolean;
+  setShowSearchBar: React.Dispatch<React.SetStateAction<boolean>>;
 }
