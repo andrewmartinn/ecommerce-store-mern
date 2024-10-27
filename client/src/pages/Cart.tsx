@@ -33,7 +33,6 @@ const Cart: React.FC = () => {
     }
 
     setCartData(cartProducts);
-    console.log("Cart products: ", cartProducts);
   }, [cartItems]);
 
   return (
