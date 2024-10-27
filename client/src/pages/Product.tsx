@@ -7,7 +7,7 @@ import RelatedProducts from "../components/RelatedProducts";
 
 const Product: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
-  const { products, currency } = useShopContext();
+  const { products, currency, addToCart } = useShopContext();
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [productData, setProductData] = useState<IProduct | undefined>(
@@ -18,7 +18,6 @@ const Product: React.FC = () => {
     const currentProduct = products.find((item) => item._id === productId);
     setSelectedImage(currentProduct?.image[0] || "");
     setProductData(currentProduct || undefined);
-    console.log(currentProduct);
   }, [productId, products]);
 
   useEffect(() => {
@@ -94,7 +93,10 @@ const Product: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <button className="bg-black px-8 py-3 text-sm uppercase text-white active:bg-gray-700">
+              <button
+                className="bg-black px-8 py-3 text-sm uppercase text-white active:bg-gray-700"
+                onClick={() => addToCart(productData._id, selectedSize)}
+              >
                 Add To Cart
               </button>
               <hr className="mt-8 sm:w-4/5" />

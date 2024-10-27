@@ -18,7 +18,7 @@ const navlinks: NavLink[] = [
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const { setShowSearchBar } = useShopContext();
+  const { setShowSearchBar, getCartCount } = useShopContext();
   const [isSidebarActive, setIsSidebarActive] = useState(false);
 
   return (
@@ -71,7 +71,7 @@ const Navbar: React.FC = () => {
         <Link to={"/cart"} className="relative">
           <img src={assets.cart_icon} alt="cart icon" className="w-5 min-w-5" />
           <p className="absolute bottom-[-5px] right-[-5px] aspect-square w-4 rounded-full bg-black text-center text-[8px] leading-4 text-white">
-            10
+            {getCartCount()}
           </p>
         </Link>
         <img

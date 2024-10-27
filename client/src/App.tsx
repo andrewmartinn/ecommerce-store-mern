@@ -12,6 +12,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 
+import { Toaster } from "react-hot-toast";
+
 const App: React.FC = () => {
   return (
     <main className="px-4 font-outfit sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
@@ -29,6 +31,7 @@ const App: React.FC = () => {
         <Route path="/orders" element={<Orders />} />
       </Routes>
       <Footer />
+      <Toaster position="top-right" />
     </main>
   );
 };
