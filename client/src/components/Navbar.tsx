@@ -55,11 +55,13 @@ const Navbar: React.FC = () => {
           />
         )}
         <div className="group relative">
-          <img
-            src={assets.profile_icon}
-            alt="user profile menu icon"
-            className="w-5 cursor-pointer"
-          />
+          <Link to={"/login"}>
+            <img
+              src={assets.profile_icon}
+              alt="user profile menu icon"
+              className="w-5 cursor-pointer"
+            />
+          </Link>
           <div className="dropdown-menu absolute right-0 hidden pt-4 group-hover:block">
             <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-gray-500">
               <p className="cursor-pointer hover:text-black">My Profile</p>
