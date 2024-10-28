@@ -1,4 +1,5 @@
 import { assets } from "../assets/ui-assets/data";
+import NewsletterSignup from "../components/NewsletterSignup";
 import SectionHeader from "../components/SectionHeader";
 
 const Contact: React.FC = () => {
@@ -30,6 +31,7 @@ const Contact: React.FC = () => {
           </button>
         </div>
       </div>
+      <NewsletterSignup />
     </section>
   );
 };
