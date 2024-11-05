@@ -38,7 +38,7 @@ const addProduct = async (req, res) => {
       category,
       price: Number(price),
       subCategory,
-      bestseller: bestseller === "true" ? true : false,
+      bestSeller: bestseller === "true" ? true : false,
       sizes: JSON.parse(sizes),
       image: imagesUrl,
       date: Date.now(),
@@ -46,13 +46,11 @@ const addProduct = async (req, res) => {
 
     const createdProduct = await Product.create(newProduct);
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Product successfully created",
-        createdProduct,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Product successfully created",
+      createdProduct,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });

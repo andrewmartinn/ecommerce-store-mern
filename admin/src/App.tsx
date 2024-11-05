@@ -6,9 +6,15 @@ import Orders from "./pages/Orders";
 import ProductsList from "./pages/ProductsList";
 import Login from "./components/Login";
 import useAuthContext from "./hooks/useAuthContext";
+import Loading from "./components/Loading";
+import { Toaster } from "react-hot-toast";
 
 const App: React.FC = () => {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, loading } = useAuthContext();
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen font-outfit">
@@ -28,6 +34,7 @@ const App: React.FC = () => {
               </Routes>
             </div>
           </div>
+          <Toaster position="top-right" />
         </>
       )}
     </div>

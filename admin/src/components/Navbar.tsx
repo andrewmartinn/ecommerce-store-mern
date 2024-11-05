@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
       />
       <button
         onClick={logout}
-        className="rounded-full bg-gray-600 px-5 py-2 text-xs text-white sm:px-7 sm:py-2 sm:text-sm"
+        className="rounded-full bg-gray-600 px-5 py-2 text-xs text-white hover:opacity-95 sm:px-7 sm:py-2 sm:text-sm"
       >
         Logout
       </button>
