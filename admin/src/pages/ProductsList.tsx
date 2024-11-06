@@ -16,7 +16,6 @@ const ProductsList: React.FC = () => {
       );
 
       if (response.data.success) {
-        console.log("Products from server: ", response.data.products);
         setAllProducts(response.data.products);
         setError(false);
       } else {
