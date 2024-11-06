@@ -2,15 +2,16 @@ import jwt from "jsonwebtoken";
 
 const adminAuth = async (req, res, next) => {
   try {
-    const { token } = req.headers;
-    console.log(token);
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
+    if (!authHeader) {
       return res.status(400).json({
         success: false,
         message: "Not Authorized to access requested resource",
       });
     }
+
+    const token = authHeader.split(" ")[1];
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 

@@ -81,7 +81,7 @@ const AddProduct: React.FC = () => {
         formData,
         {
           headers: {
-            token,
+            Authorization: `Bearer ${token}`,
           },
         },
       );
