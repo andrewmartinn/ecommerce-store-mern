@@ -1,7 +1,8 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { assets } from "../assets/ui-assets/data";
 import { useState } from "react";
 import useShopContext from "../hooks/useShopContext";
+import useAuthContext from "../hooks/useAuthContext";
 
 interface NavLink {
   id: number;
@@ -17,9 +18,16 @@ const navlinks: NavLink[] = [
 ];
 
 const Navbar: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
-  const { setShowSearchBar, getCartCount } = useShopContext();
+  const { token, logoutUser } = useAuthContext();
+  const { setShowSearchBar, getCartCount, setCartItems } = useShopContext();
   const [isSidebarActive, setIsSidebarActive] = useState(false);
+
+  const handleLogout = () => {
+    logoutUser();
+    setCartItems({});
+  };
 
   return (
     <nav className="flex items-center justify-between py-5 font-medium">
@@ -55,20 +63,27 @@ const Navbar: React.FC = () => {
           />
         )}
         <div className="group relative">
-          <Link to={"/login"}>
-            <img
-              src={assets.profile_icon}
-              alt="user profile menu icon"
-              className="w-5 cursor-pointer"
-            />
-          </Link>
-          <div className="dropdown-menu absolute right-0 hidden pt-4 group-hover:block">
-            <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-gray-500">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p className="cursor-pointer hover:text-black">Logout</p>
+          <img
+            onClick={() => (token ? null : navigate("/login"))}
+            src={assets.profile_icon}
+            alt="user profile menu icon"
+            className="w-5 cursor-pointer"
+          />
+
+          {token && (
+            <div className="dropdown-menu absolute right-0 hidden pt-4 group-hover:block">
+              <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-gray-500">
+                <p className="cursor-pointer hover:text-black">My Profile</p>
+                <p className="cursor-pointer hover:text-black">Orders</p>
+                <p
+                  onClick={handleLogout}
+                  className="cursor-pointer hover:text-black"
+                >
+                  Logout
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <Link to={"/cart"} className="relative">
           <img src={assets.cart_icon} alt="cart icon" className="w-5 min-w-5" />
@@ -114,33 +129,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-{
-  /* <div
-        className={`absolute right-0 top-0 h-full transform bg-white shadow-md transition-transform duration-300 ease-in-out ${
-          isSidebarActive ? "translate-x-0" : "translate-x-full"
-        } w-3/4`}
-      >
-        <div className="flex flex-col text-gray-600">
-          <div
-            className="flex cursor-pointer items-center gap-4 p-3"
-            onClick={() => setIsSidebarActive(false)}
-          >
-            <img src={assets.dropdown_icon} alt="" className="h-4 rotate-180" />
-            <p className="text-gray-500 hover:text-black">Back</p>
-          </div>
-          <div className="flex flex-col divide-y-2 divide-slate-400/[.24]">
-            {navlinks.map((item) => (
-              <NavLink
-                key={item.id}
-                to={item.url}
-                onClick={() => setIsSidebarActive(false)}
-                className="py-2 pl-6 uppercase"
-              >
-                {item.name}
-              </NavLink>
-            ))}
-          </div>
-        </div>
-      </div> */
-}

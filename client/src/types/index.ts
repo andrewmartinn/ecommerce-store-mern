@@ -1,3 +1,5 @@
+import { ILoginForm, IRegisterForm } from "../utils/validator";
+
 type Category = "Men" | "Women" | "Kids";
 
 type SubCategory = "Topwear" | "Bottomwear" | "Winterwear";
@@ -29,6 +31,7 @@ export interface ShopContextType {
   products: IProduct[];
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  setCartItems: React.Dispatch<React.SetStateAction<ICart>>;
   showSearchBar: boolean;
   setShowSearchBar: React.Dispatch<React.SetStateAction<boolean>>;
   cartItems: ICart;
@@ -40,4 +43,13 @@ export interface ShopContextType {
     quantity: number,
   ) => Promise<void>;
   getCartAmount: () => number;
+}
+
+export interface AuthContextType {
+  token: string | null;
+  error: string | null;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  registerUser: (values: IRegisterForm) => Promise<void>;
+  loginUser: (values: ILoginForm) => Promise<void>;
+  logoutUser: () => void;
 }

@@ -128,6 +128,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
         showSearchBar,
         setShowSearchBar,
         cartItems,
+        setCartItems,
         addToCart,
         getCartCount,
         updateCartItemQuantity,

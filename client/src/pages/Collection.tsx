@@ -96,7 +96,7 @@ const Collection: React.FC = () => {
 
   useEffect(() => {
     applyFilter();
-  }, [applyFilter]);
+  }, [applyFilter, products]);
 
   return (
     <section className="flex flex-col gap-1 border-t pt-10 sm:flex-row sm:gap-10">
