@@ -20,7 +20,7 @@ export interface IProduct {
   subCategory: SubCategory;
   sizes: string[];
   date: number;
-  bestseller: boolean;
+  bestSeller: boolean;
 }
 
 export interface ShopContextType {

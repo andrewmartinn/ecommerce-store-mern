@@ -9,7 +9,7 @@ const BestSeller: React.FC = () => {
   const [bestSellerProducts, setBestSellerProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    const productsList = products.filter((item) => item.bestseller);
+    const productsList = products.filter((item) => item.bestSeller);
     setBestSellerProducts(productsList.slice(0, 5));
   }, [products]);
 

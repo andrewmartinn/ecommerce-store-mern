@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 import { toast } from "react-hot-toast";
-import { products } from "../assets/ui-assets/data";
-import { ICart, ShopContextType } from "../types";
+import { ICart, IProduct, ShopContextType } from "../types";
 
 export const ShopContext = createContext<ShopContextType | undefined>(
   undefined,
@@ -17,9 +17,26 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [cartItems, setCartItems] = useState<ICart>({});
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   const currency = "$";
   const deliveryFee = 10;
+
+  const fetchAllProducts = async (): Promise<void> => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/api/product/list`,
+      );
+
+      if (response.data.success) {
+        setProducts(response.data.products);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const addToCart = async (itemId: string, itemSize: string) => {
     if (!itemSize) {
@@ -95,6 +112,10 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
 
     return totalAmount;
   };
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
 
   return (
     <ShopContext.Provider
