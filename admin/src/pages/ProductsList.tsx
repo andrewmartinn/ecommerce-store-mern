@@ -3,11 +3,13 @@ import { IProduct } from "../types";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useAuthContext from "../hooks/useAuthContext";
+import Loading from "../components/Loading";
 
 const ProductsList: React.FC = () => {
   const { token } = useAuthContext();
-  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
 
   const fetchAllProducts = async () => {
     try {
@@ -18,9 +20,11 @@ const ProductsList: React.FC = () => {
       if (response.data.success) {
         setAllProducts(response.data.products);
         setError(false);
+        setLoading(false);
       } else {
         toast.error(response.data.message);
         setError(true);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -57,7 +61,15 @@ const ProductsList: React.FC = () => {
     fetchAllProducts();
   }, []);
 
-  if (error && allProducts) {
+  if (loading) {
+    return (
+      <section className="flex min-h-screen w-full items-center justify-center">
+        <Loading />
+      </section>
+    );
+  }
+
+  if (error) {
     return (
       <section className="flex min-h-screen w-full items-center justify-center">
         <p className="text-2xl font-medium">Error Fetching Products</p>
