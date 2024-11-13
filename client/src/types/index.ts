@@ -35,7 +35,7 @@ export interface ShopContextType {
   showSearchBar: boolean;
   setShowSearchBar: React.Dispatch<React.SetStateAction<boolean>>;
   cartItems: ICart;
-  addToCart: (id: string, size: string) => void;
+  addToCart: (id: string, size: string) => Promise<void>;
   getCartCount: () => number;
   updateCartItemQuantity: (
     id: string,

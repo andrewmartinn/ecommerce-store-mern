@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ICart, IProduct, ShopContextType } from "../types";
+import useAuthContext from "../hooks/useAuthContext";
 
 export const ShopContext = createContext<ShopContextType | undefined>(
   undefined,
@@ -14,6 +15,8 @@ interface ShopContextProviderProps {
 const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
   children,
 }) => {
+  const { token } = useAuthContext();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [cartItems, setCartItems] = useState<ICart>({});
@@ -38,7 +41,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
     }
   };
 
-  const addToCart = async (itemId: string, itemSize: string) => {
+  const addToCart = async (itemId: string, itemSize: string): Promise<void> => {
     if (!itemSize) {
       toast.error("Please select a size!");
       return;
@@ -59,7 +62,26 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
       cartData[itemId] = { [itemSize]: 1 };
     }
 
+    cleanEmptyCartItems(cartData);
+
     setCartItems(cartData);
+
+    // sync cart items with user cart data on DB for logged in users
+    if (token || localStorage.getItem("token")) {
+      try {
+        await axios.post(
+          `${import.meta.env.VITE_SERVER_URL}/api/cart/add`,
+          { itemId, itemSize },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+      } catch (error) {
+        console.error("Error adding item to cart: ", error);
+      }
+    }
   };
 
   const updateCartItemQuantity = async (
@@ -71,7 +93,32 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
 
     cartData[itemId][itemSize] = itemQuantity;
 
+    cleanEmptyCartItems(cartData);
+
     setCartItems(cartData);
+
+    // update cart item quantity on DB for logged in users
+    if (token || localStorage.getItem("token")) {
+      try {
+        const response = await axios.patch(
+          `${import.meta.env.VITE_SERVER_URL}/api/cart/update`,
+          {
+            itemId,
+            itemQuantity,
+            itemSize,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error updating cart item quantity: ", error);
+      }
+    }
   };
 
   const getCartCount = (): number => {
@@ -113,9 +160,47 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
     return totalAmount;
   };
 
+  // sync user cart from DB
+  const getUserCart = async (token: string | null): Promise<void> => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/api/cart`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (response.data.success) {
+        const userCart = response.data.cartData;
+        setCartItems(userCart);
+      }
+    } catch (error) {
+      console.error("Failed to retrieve user cart: ", error);
+    }
+  };
+
+  // utility to clean product entry after removing all sizes
+  const cleanEmptyCartItems = (cartData: ICart) => {
+    Object.keys(cartData).forEach((productId) => {
+      const sizes = cartData[productId];
+      const emptySizes = Object.values(sizes).every((qty) => qty === 0);
+      if (emptySizes) {
+        delete cartData[productId];
+      }
+    });
+  };
+
   useEffect(() => {
     fetchAllProducts();
   }, []);
+
+  useEffect(() => {
+    if (token || localStorage.getItem("token")) {
+      getUserCart(token || localStorage.getItem("token"));
+    }
+  }, [token]);
 
   return (
     <ShopContext.Provider

@@ -74,7 +74,12 @@ const Navbar: React.FC = () => {
             <div className="dropdown-menu absolute right-0 hidden pt-4 group-hover:block">
               <div className="flex w-36 flex-col gap-2 rounded bg-slate-100 px-5 py-3 text-gray-500">
                 <p className="cursor-pointer hover:text-black">My Profile</p>
-                <p className="cursor-pointer hover:text-black">Orders</p>
+                <p
+                  onClick={() => navigate("/orders")}
+                  className="cursor-pointer hover:text-black"
+                >
+                  Orders
+                </p>
                 <p
                   onClick={handleLogout}
                   className="cursor-pointer hover:text-black"
