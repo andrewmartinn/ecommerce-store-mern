@@ -23,6 +23,8 @@ export interface IProduct {
   sizes: string[];
   date: number;
   bestSeller: boolean;
+  selectedSize?: string;
+  quantity?: number;
 }
 
 export interface ShopContextType {

@@ -1,5 +1,5 @@
 import Order from "../models/orderModel.js ";
-import User from "../models/userModel";
+import User from "../models/userModel.js";
 
 const PlaceOrderCOD = async (req, res) => {
   try {
