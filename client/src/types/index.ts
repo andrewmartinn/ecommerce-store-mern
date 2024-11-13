@@ -1,4 +1,4 @@
-import { ILoginForm, IRegisterForm } from "../utils/validator";
+import { IAddressForm, ILoginForm, IRegisterForm } from "../utils/validator";
 
 type Category = "Men" | "Women" | "Kids";
 
@@ -54,4 +54,25 @@ export interface AuthContextType {
   registerUser: (values: IRegisterForm) => Promise<void>;
   loginUser: (values: ILoginForm) => Promise<void>;
   logoutUser: () => void;
+}
+
+export interface OrderItem extends Omit<IProduct, "selectedSize" | "quantity"> {
+  selectedSize: string;
+  quantity: number;
+  paymentMethod: string;
+  payment: boolean;
+  date: number;
+  status: string;
+}
+
+export interface IUserOrder {
+  _id: string;
+  userId: string;
+  items: OrderItem[];
+  amount: number;
+  address: IAddressForm;
+  status: string;
+  paymentMethod: string;
+  payment: boolean;
+  date: number;
 }

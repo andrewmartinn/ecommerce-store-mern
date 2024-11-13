@@ -13,7 +13,7 @@ import authUser from "../middleware/auth.js";
 const orderRouter = express.Router();
 
 // @Admin Routes
-orderRouter.get("/admin", adminAuth, getAllOrders);
+orderRouter.get("/admin/orders", adminAuth, getAllOrders);
 orderRouter.patch("/status", adminAuth, updateOrderStatus);
 
 // @User Payment Routes
@@ -22,6 +22,6 @@ orderRouter.post("/stripe", authUser, PlaceOrderStripe);
 orderRouter.post("/razor", authUser, PlaceOrderRazorpay);
 
 // @User Orders Routes
-orderRouter.get("/orders", authUser, getUserOrders);
+orderRouter.get("/user/orders", authUser, getUserOrders);
 
 export default orderRouter;

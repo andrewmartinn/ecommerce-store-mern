@@ -36,7 +36,26 @@ const PlaceOrderRazorpay = async (req, res) => {};
 const getAllOrders = async (req, res) => {};
 
 // get user orders for client
-const getUserOrders = async (req, res) => {};
+const getUserOrders = async (req, res) => {
+  try {
+    const { userId } = req.user;
+
+    const userOrders = await Order.find({ userId });
+
+    if (!userOrders) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User does not have any orders yet" });
+    }
+
+    res.status(200).json({ success: true, userOrders });
+  } catch (error) {
+    console.error("Unable to get user orders: ", error);
+    res
+      .status(500)
+      .json({ success: true, message: "Unable to get user orders" });
+  }
+};
 
 // update order status from admin panel
 const updateOrderStatus = async (req, res) => {};
