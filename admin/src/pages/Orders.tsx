@@ -66,7 +66,7 @@ const Orders: React.FC = () => {
 
   return (
     <section>
-      <h3>Orders</h3>
+      <h1 className="mb-4 text-2xl font-bold">Orders</h1>
       <div>
         {orders.map((order) => (
           <div

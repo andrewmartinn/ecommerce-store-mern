@@ -6,7 +6,6 @@ export interface AuthContextType {
   login: (values: ILoginForm) => Promise<void>;
   logout: () => void;
   error: string | null;
-  loading: boolean;
 }
 
 type Category = "Men" | "Women" | "Kids";

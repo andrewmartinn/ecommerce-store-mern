@@ -12,7 +12,6 @@ interface AuthContextProviderProps {
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -23,7 +22,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       setIsAuthenticated(true);
       setToken(storedAuthToken);
     }
-    setLoading(false);
   }, []);
 
   const login = async (values: ILoginForm) => {
@@ -60,7 +58,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
   return (
     <AuthContext.Provider
-      value={{ token, isAuthenticated, login, logout, error, loading }}
+      value={{ token, isAuthenticated, login, logout, error }}
     >
       {children}
     </AuthContext.Provider>
