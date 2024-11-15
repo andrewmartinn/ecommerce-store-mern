@@ -4,6 +4,7 @@ import SectionHeader from "../components/SectionHeader";
 import { assets } from "../assets/ui-assets/data";
 import CartTotal from "../components/CartTotal";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "../hooks/useAuthContext";
 
 interface ICartProduct {
   _id: string;
@@ -13,9 +14,18 @@ interface ICartProduct {
 
 const Cart: React.FC = () => {
   const navigate = useNavigate();
+  const { token } = useAuthContext();
   const { products, currency, cartItems, updateCartItemQuantity } =
     useShopContext();
   const [cartData, setCartData] = useState<ICartProduct[]>([]);
+
+  const handleCheckout = () => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/checkout");
+    }
+  };
 
   useEffect(() => {
     const cartProducts = [];
@@ -104,7 +114,7 @@ const Cart: React.FC = () => {
           <div className="w-full text-end">
             <button
               disabled={cartData.length === 0}
-              onClick={() => cartData.length > 0 && navigate("/checkout")}
+              onClick={handleCheckout}
               className={`my-8 bg-black px-8 py-3 uppercase text-white ${cartData.length > 0 ? "hover:opacity-80" : "cursor-not-allowed disabled:opacity-40"}`}
             >
               Proceed to Checkout
