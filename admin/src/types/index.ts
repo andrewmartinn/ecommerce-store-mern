@@ -25,3 +25,32 @@ export interface IProduct {
   date: number;
   bestSeller: boolean;
 }
+
+interface IOrderItem extends IProduct {
+  selectedSize: string;
+  quantity: number;
+}
+
+interface IAddress {
+  firstName: string;
+  lastName: string;
+  email: string;
+  street: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  country: string;
+  phone: string;
+}
+
+export interface IOrder {
+  _id: string;
+  userId: string;
+  items: IOrderItem[];
+  amount: number;
+  address: IAddress;
+  status: string;
+  paymentMethod: string;
+  payment: boolean;
+  date: number;
+}

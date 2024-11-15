@@ -33,7 +33,24 @@ const PlaceOrderStripe = async (req, res) => {};
 const PlaceOrderRazorpay = async (req, res) => {};
 
 // get orders for admin panel
-const getAllOrders = async (req, res) => {};
+const getAllOrders = async (req, res) => {
+  try {
+    const allOrders = await Order.find({});
+
+    if (!allOrders) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Unable to fetch orders" });
+    }
+
+    res.status(200).json({ success: true, allOrders });
+  } catch (error) {
+    console.error("Error fetching admin orders: ", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error fetching admin orders" });
+  }
+};
 
 // get user orders for client
 const getUserOrders = async (req, res) => {
@@ -58,7 +75,26 @@ const getUserOrders = async (req, res) => {
 };
 
 // update order status from admin panel
-const updateOrderStatus = async (req, res) => {};
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId, orderStatus } = req.body;
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { status: orderStatus },
+      { new: true }
+    );
+
+    res
+      .status(200)
+      .json({ success: true, message: "Order status updated", updatedOrder });
+  } catch (error) {
+    console.error("Error updating order status: ", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error updating order status" });
+  }
+};
 
 export {
   PlaceOrderCOD,
