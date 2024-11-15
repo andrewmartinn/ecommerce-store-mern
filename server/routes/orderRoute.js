@@ -6,6 +6,7 @@ import {
   PlaceOrderRazorpay,
   PlaceOrderStripe,
   updateOrderStatus,
+  verifyStripePayment,
 } from "../controllers/orderController.js";
 import adminAuth from "../middleware/adminAuth.js";
 import authUser from "../middleware/auth.js";
@@ -20,6 +21,9 @@ orderRouter.patch("/status", adminAuth, updateOrderStatus);
 orderRouter.post("/cod", authUser, PlaceOrderCOD);
 orderRouter.post("/stripe", authUser, PlaceOrderStripe);
 orderRouter.post("/razor", authUser, PlaceOrderRazorpay);
+
+// @User Stripe Payment Verification
+orderRouter.post("/stripe-verify", authUser, verifyStripePayment);
 
 // @User Orders Routes
 orderRouter.get("/user/orders", authUser, getUserOrders);

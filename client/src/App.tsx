@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 
 import { Toaster } from "react-hot-toast";
+import PaymentVerification from "./pages/PaymentVerification";
 
 const App: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/verify" element={<PaymentVerification />} />
       </Routes>
       <Footer />
       <Toaster position="top-right" />

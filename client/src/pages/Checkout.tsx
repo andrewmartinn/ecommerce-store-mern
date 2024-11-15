@@ -27,7 +27,7 @@ const PaymentOption: React.FC<PaymentOptionProps> = ({
   onSelect,
 }) => {
   return (
-    <button
+    <div
       className="flex cursor-pointer items-center gap-3 border p-2 px-3"
       onClick={onSelect}
     >
@@ -41,7 +41,7 @@ const PaymentOption: React.FC<PaymentOptionProps> = ({
           {label}
         </p>
       )}
-    </button>
+    </div>
   );
 };
 
@@ -119,6 +119,27 @@ const Checkout: React.FC = () => {
             setCartItems({});
             reset();
             navigate("/orders");
+          } else {
+            toast.error(response.data.message);
+          }
+
+          break;
+        }
+
+        case "stripe": {
+          const response = await axios.post(
+            `${import.meta.env.VITE_SERVER_URL}/api/order/stripe`,
+            newOrderData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+
+          if (response.data.success) {
+            const { session_url } = response.data;
+            window.location.replace(session_url);
           } else {
             toast.error(response.data.message);
           }
