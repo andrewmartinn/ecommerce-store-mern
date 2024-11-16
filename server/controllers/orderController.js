@@ -23,11 +23,14 @@ const handleStripeWebhook = async (req, res) => {
     return res.status(400).send(`Webhook error: ${error.message}`);
   }
 
+  console.log("Received Stripe Event:", event);
+
   // process stripe event
   switch (event.type) {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
       console.log("payment_intent.succeeded: ", paymentIntent);
+      console.log("Payment Intent Metadata:", paymentIntent.metadata);
 
       // update order status in DB
       const orderId = paymentIntent.metadata.order_id;
@@ -165,6 +168,8 @@ const PlaceOrderStripe = async (req, res) => {
         order_id: newStripeOrder._id.toString(),
       },
     });
+
+    console.log("Created Stripe Checkout Session:", session);
 
     res.status(200).json({ success: true, session_url: session.url });
   } catch (error) {
