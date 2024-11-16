@@ -32,6 +32,7 @@ const handleStripeWebhook = async (req, res) => {
 
       // update order status in DB
       const orderId = paymentIntent.metadata.order_id;
+      const userId = paymentIntent.metadata.user_id;
 
       try {
         const updatedOrder = await Order.findByIdAndUpdate(
@@ -40,7 +41,7 @@ const handleStripeWebhook = async (req, res) => {
           { new: true }
         );
 
-        await User.findByIdAndUpdate(user_id, { cartData: {} });
+        await User.findByIdAndUpdate(userId, { cartData: {} });
 
         if (updatedOrder) {
           console.log(`Order ${orderId} updated`);
