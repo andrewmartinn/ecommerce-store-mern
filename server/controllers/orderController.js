@@ -167,6 +167,12 @@ const PlaceOrderStripe = async (req, res) => {
       metadata: {
         order_id: newStripeOrder._id.toString(),
       },
+      payment_intent_data: {
+        metadata: {
+          user_id: userId.toString(),
+          order_id: newStripeOrder.id.toString(),
+        },
+      },
     });
 
     console.log("Created Stripe Checkout Session:", session);
