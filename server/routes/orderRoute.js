@@ -2,7 +2,6 @@ import express from "express";
 import {
   getAllOrders,
   getUserOrders,
-  handleStripeWebhook,
   PlaceOrderCOD,
   PlaceOrderStripe,
   updateOrderStatus,
@@ -19,13 +18,6 @@ orderRouter.patch("/status", adminAuth, updateOrderStatus);
 // @User Payment Routes
 orderRouter.post("/cod", authUser, PlaceOrderCOD);
 orderRouter.post("/stripe", authUser, PlaceOrderStripe);
-
-// @User Stripe Webhook
-orderRouter.post(
-  "/stripe/webhook",
-  express.raw({ type: "application/json" }),
-  handleStripeWebhook
-);
 
 // @User Orders Routes
 orderRouter.get("/user/orders", authUser, getUserOrders);

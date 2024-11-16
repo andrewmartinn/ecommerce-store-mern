@@ -9,6 +9,7 @@ import userRouter from "./routes/userRoute.js";
 import productRouter from "./routes/productRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import { handleStripeWebhook } from "./controllers/orderController.js";
 
 const app = express();
 
@@ -17,6 +18,14 @@ connectCloudinary();
 
 // middlewares
 app.use(cors());
+
+// stripe webhook
+app.post(
+  "/api/order/stripe/webhook",
+  express.raw({ type: "application/json" }),
+  handleStripeWebhook
+);
+
 app.use(express.json());
 
 // api routers
