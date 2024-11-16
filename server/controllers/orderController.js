@@ -131,7 +131,7 @@ const PlaceOrderStripe = async (req, res) => {
     };
 
     const newStripeOrder = await Order.create(newOrderData);
-    console.log(newStripeOrder);
+    console.log("new stripe order", newStripeOrder);
 
     const line_items = items.map((item) => ({
       price_data: {
