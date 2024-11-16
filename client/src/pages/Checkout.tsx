@@ -28,7 +28,7 @@ const PaymentOption: React.FC<PaymentOptionProps> = ({
 }) => {
   return (
     <div
-      className="flex cursor-pointer items-center gap-3 border p-2 px-3"
+      className="flex flex-1 cursor-pointer items-center gap-3 border p-2 px-3"
       onClick={onSelect}
     >
       <p
@@ -282,7 +282,7 @@ const Checkout: React.FC = () => {
           </div>
         </div>
         {/* cart total & payment method selection */}
-        <div className="mt-8">
+        <div className="mt-8 sm:w-1/2">
           <div className="mt-8 min-w-80">
             <CartTotal />
           </div>
@@ -294,12 +294,6 @@ const Checkout: React.FC = () => {
                 logo={assets.stripe_logo}
                 isSelected={selectedPaymentMethod === "stripe"}
                 onSelect={() => setSelectedPaymentMethod("stripe")}
-              />
-              <PaymentOption
-                method="razorpay"
-                logo={assets.razorpay_logo}
-                isSelected={selectedPaymentMethod === "razorpay"}
-                onSelect={() => setSelectedPaymentMethod("razorpay")}
               />
               <PaymentOption
                 method="cod"

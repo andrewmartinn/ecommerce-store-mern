@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 
-const { Schema, models, model } = mongoose;
-
-const orderSchema = new Schema({
+const orderSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   items: { type: Array, required: true },
   amount: { type: Number, required: true },
@@ -13,6 +11,6 @@ const orderSchema = new Schema({
   date: { type: Number, required: true },
 });
 
-const Order = models.Order || model("Order", orderSchema);
+const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
 
 export default Order;
