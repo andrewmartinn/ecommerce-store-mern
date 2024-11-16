@@ -19,7 +19,6 @@ const PaymentVerification: React.FC = () => {
     if (success === "true") {
       setCartItems({});
       navigate("/orders");
-      toast.success("Payment successful");
     } else {
       navigate("/checkout");
       toast.error("Payment failed. Please try again");

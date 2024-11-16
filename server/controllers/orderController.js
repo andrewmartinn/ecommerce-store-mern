@@ -158,7 +158,7 @@ const PlaceOrderStripe = async (req, res) => {
       success_url: `${origin}/verify?success=true&orderId=${newStripeOrder._id}`,
       cancel_url: `${origin}/verify?success=false&orderId=${newStripeOrder._id}`,
       metadata: {
-        order_id: newStripeOrder._id,
+        order_id: newStripeOrder._id.toString(),
       },
     });
 
