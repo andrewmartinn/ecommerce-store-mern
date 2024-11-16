@@ -40,6 +40,10 @@ const handleStripeWebhook = async (req, res) => {
         );
 
         const userId = updatedOrder.userId;
+
+        console.log("updatedOrder", updatedOrder);
+        console.log("userId", userId);
+
         await User.findByIdAndUpdate(userId, { cartData: {} });
 
         if (updatedOrder) {
@@ -153,6 +157,8 @@ const PlaceOrderStripe = async (req, res) => {
       },
       quantity: 1,
     });
+
+    console.log("lineItems", line_items);
 
     // create checkout session
     const session = await stripe.checkout.sessions.create({
