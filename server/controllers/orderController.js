@@ -29,8 +29,6 @@ const handleStripeWebhook = async (req, res) => {
   switch (event.type) {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
-      console.log("payment_intent.succeeded: ", paymentIntent);
-      console.log("Payment Intent Metadata:", paymentIntent.metadata);
 
       // update order status in DB
       const orderId = paymentIntent.metadata.order_id;
@@ -42,7 +40,7 @@ const handleStripeWebhook = async (req, res) => {
           { new: true }
         );
 
-        console.log("updatedOrder", updatedOrder);
+        await User.findByIdAndUpdate(user_id, { cartData: {} });
 
         if (updatedOrder) {
           console.log(`Order ${orderId} updated`);
@@ -162,6 +160,7 @@ const PlaceOrderStripe = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items,
       mode: "payment",
+      customer_email: address.email,
       success_url: `${origin}/verify?success=true&orderId=${newStripeOrder._id}`,
       cancel_url: `${origin}/verify?success=false&orderId=${newStripeOrder._id}`,
       metadata: {
