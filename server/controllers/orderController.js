@@ -39,12 +39,7 @@ const handleStripeWebhook = async (req, res) => {
           { new: true }
         );
 
-        const userId = updatedOrder.userId;
-
         console.log("updatedOrder", updatedOrder);
-        console.log("userId", userId);
-
-        await User.findByIdAndUpdate(userId, { cartData: {} });
 
         if (updatedOrder) {
           console.log(`Order ${orderId} updated`);
