@@ -29,7 +29,7 @@ const PaymentVerification: React.FC = () => {
     verifyPayment();
   }, [verifyPayment]);
 
-  return null;
+  return <section></section>;
 };
 
 export default PaymentVerification;
